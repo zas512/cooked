@@ -1,26 +1,36 @@
 "use client";
-
-import { useEffect, useState, useCallback } from "react";
-import { getSpotifyData } from "@/lib/spotify";
-import { generateRoast } from "@/lib/gemini";
-import { RoastDisplay } from "@/components/RoastDisplay";
+import { getCookedData } from "@/app/actions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RoastDisplay } from "@/components/RoastDisplay";
 import { Flame } from "lucide-react";
 import type { SpotifyStats } from "@/types/spotify";
+import { useEffect, useState, useCallback } from "react";
+
+export type Message = {
+  role: "user" | "model";
+  parts: { text: string }[];
+};
 
 export function DashboardContent({ accessToken }: { accessToken: string }) {
   const [data, setData] = useState<SpotifyStats | null>(null);
-  const [roast, setRoast] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const spotifyData = await getSpotifyData(accessToken);
-      setData(spotifyData);
-      const roastText = await generateRoast(spotifyData);
-      setRoast(roastText);
+      const { data, initialRoast, error } = await getCookedData(accessToken);
+
+      if (error) {
+        setError(error);
+        return;
+      }
+
+      setData(data);
+      if (initialRoast) {
+        setMessages([{ role: "model", parts: [{ text: initialRoast }] }]);
+      }
     } catch (err: unknown) {
       console.error(err);
       setError("Failed to fetch data or generate roast. Check your API keys.");
@@ -70,7 +80,13 @@ export function DashboardContent({ accessToken }: { accessToken: string }) {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-12 pb-24">
-      {data && <RoastDisplay roast={roast} data={data} />}
+      {data && (
+        <RoastDisplay
+          messages={messages}
+          setMessages={setMessages}
+          data={data}
+        />
+      )}
     </div>
   );
 }
