@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cooked 🌶️ - The Ultimate Personality Roaster
 
-## Getting Started
+**Cooked** is a web application that uses Gemini AI to brutally judge your digital existence. Connect your Spotify, social media, or just exist—and get a witty, sarcastic, and hilarious appraisal of your personality.
 
-First, run the development server:
+![Landing Page](public/screenshot.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- **Brutal AI Roasts**: Powered by Google Gemini 1.5 Flash.
+- **Digital Analysis**: Pulls data from Spotify, social media, and more.
+- **Sleek UI**: Modern, responsive design with dark mode and smooth animations.
+- **Privacy Focused**: No data is stored; we only process your stats in real-time.
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescript.org/)
+- **AI**: [Google Gemini Pro API](https://aistudio.google.com/)
+- **Auth**: [NextAuth.js](https://next-auth.js.org/) with Spotify Provider
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+## 🛠️ Getting Started
+
+### 1. Prerequisites
+- A Spotify account.
+- A Google Cloud/AI Studio account (for Gemini API).
+
+### 2. Environment Variables
+Create a `.env.local` file in the root directory and add the following:
+
+```env
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+GEMINI_API_KEY=your_gemini_api_key
+
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> [!NOTE]
+> For local development with Spotify, ensure your Redirect URI in the Spotify Dashboard is set to `http://localhost:3000/api/auth/callback/spotify` (or `http://127.0.0.1:3000/...` if using the loopback IP).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+## 📦 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The easiest way to deploy is via **[Vercel](https://vercel.com/)**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push your code to GitHub.
+2. Connect your repository to Vercel.
+3. Add your environment variables in the Vercel dashboard.
+4. Update your Spotify Redirect URI to the production URL: `https://your-app.vercel.app/api/auth/callback/spotify`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 License
 
-## Deploy on Vercel
+Distributed under the MIT License. See `LICENSE` for more information.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built with ❤️ and a lot of judgment.
